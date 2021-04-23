@@ -27,5 +27,8 @@ public class GameManager : MonoBehaviour
     public void GoToStore()
     {
         print("Go To Store");
+        #if UNITY_EDITOR
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        #endif
     }
 }

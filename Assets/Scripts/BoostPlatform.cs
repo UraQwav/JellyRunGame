@@ -8,5 +8,7 @@ public class BoostPlatform : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         other.GetComponent<Rigidbody>().AddForce(Vector3.forward * mSpeed, ForceMode.Impulse);
+        if(other.GetComponent<TrailRenderer>())
+            other.GetComponent<TrailRenderer>().enabled = true;
     }
 }

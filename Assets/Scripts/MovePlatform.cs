@@ -20,49 +20,86 @@ public class MovePlatform : MonoBehaviour
         LeftRight,
         ForwardBack,
         RotateByPoint,
-        RightDiaogonal
+        RotateByXAxis,
+        RightDiaogonal,
+        UpDown,
+        UpDownVelocity
     }
     void Start()
     {
         mRigidbody = GetComponent<Rigidbody>();
         if (mMovePlatformType == MovePlatformType.LeftRight)
         {
-            mSequence = DOTween.Sequence();
-            mSequence.Append(transform.DOMove(mMovePoints[0].position, mTimeToMove))
-                              .Append(transform.DOMove(mMovePoints[1].position, mTimeToMove))
-                              .SetLoops(-1, LoopType.Yoyo);
+            mSequence = DOTween.Sequence().Append(transform.DOMove(mMovePoints[0].position, mTimeToMove))
+                                          .Append(transform.DOMove(mMovePoints[1].position, mTimeToMove))
+                                          .SetLoops(-1, LoopType.Yoyo);
         }
     }
     void Update()
     {
-        if(mMovePlatformType == MovePlatformType.ForwardBack)
+        switch (mMovePlatformType)
         {
-            if (transform.position.z != mMovePoints[mCurrentPoint].position.z)
-                transform.position = Vector3.MoveTowards(transform.position, mMovePoints[mCurrentPoint].position, mTimeToMove * Time.deltaTime);
+            case MovePlatformType.ForwardBack:
+                if (transform.position.z != mMovePoints[mCurrentPoint].position.z)
+                    transform.position = Vector3.MoveTowards(transform.position, mMovePoints[mCurrentPoint].position, mTimeToMove * Time.deltaTime);
 
-            if (transform.position.z == mMovePoints[mCurrentPoint].position.z)
-                mCurrentPoint += 1;
+                if (transform.position.z == mMovePoints[mCurrentPoint].position.z)
+                    mCurrentPoint += 1;
 
-            if (mCurrentPoint >= mMovePoints.Count)
-                mCurrentPoint = 0;
+                if (mCurrentPoint >= mMovePoints.Count)
+                    mCurrentPoint = 0;
+                break;
+            case MovePlatformType.RightDiaogonal:
+                if (transform.position.x != mMovePoints[mCurrentPoint].position.x)
+                    transform.position = Vector3.Lerp(transform.position, mMovePoints[mCurrentPoint].position, mTimeToMove * Time.deltaTime);
+
+                if (transform.position.x + 0.02f >= mMovePoints[mCurrentPoint].position.x &&
+                    transform.position.x - 0.02f <= mMovePoints[mCurrentPoint].position.x)
+                {
+                    mCurrentPoint += 1;
+                }
+
+                if (mCurrentPoint >= mMovePoints.Count)
+                    mCurrentPoint = 0;
+                break;
+            case MovePlatformType.RotateByPoint:
+                transform.RotateAround(mMovePoints[0].position, Vector3.up, mTimeToMove * Time.deltaTime);
+                break;
+            default:
+                break;
         }
-        if (mMovePlatformType == MovePlatformType.RightDiaogonal)
-        {
-            if (transform.position.x != mMovePoints[mCurrentPoint].position.x)
-                transform.position = Vector3.Lerp(transform.position, mMovePoints[mCurrentPoint].position, mTimeToMove * Time.deltaTime);
+    }
 
-            if (transform.position.x + 0.02f >= mMovePoints[mCurrentPoint].position.x &&
-                transform.position.x - 0.02f <= mMovePoints[mCurrentPoint].position.x)
-            {
-                mCurrentPoint += 1;
-            }
-
-            if (mCurrentPoint >= mMovePoints.Count)
-                mCurrentPoint = 0;
-        }
-        if(mMovePlatformType == MovePlatformType.RotateByPoint)
+    private void FixedUpdate()
+    {
+        switch (mMovePlatformType)
         {
-            transform.RotateAround(mMovePoints[0].position, Vector3.up, mTimeToMove * Time.deltaTime);
+            case MovePlatformType.UpDown:
+                if (mRigidbody.position.y != mMovePoints[mCurrentPoint].position.y)
+                    mRigidbody.position = Vector3.MoveTowards(mRigidbody.position, mMovePoints[mCurrentPoint].position, mTimeToMove);
+
+                if (transform.position.y == mMovePoints[mCurrentPoint].position.y)
+                    mCurrentPoint += 1;
+
+                if (mCurrentPoint >= mMovePoints.Count)
+                    mCurrentPoint = 0;
+                break;
+            case MovePlatformType.RotateByXAxis:
+                mRigidbody.AddTorque(transform.right*mTimeToMove);
+                break;
+            case MovePlatformType.UpDownVelocity:
+                if (mRigidbody.position.y != mMovePoints[mCurrentPoint].position.y)
+                    mRigidbody.velocity = (mMovePoints[mCurrentPoint].position - mRigidbody.position) * mTimeToMove;
+
+                if (mRigidbody.position.y + 0.02f >= mMovePoints[mCurrentPoint].position.y &&
+                    mRigidbody.position.y - 0.02f <= mMovePoints[mCurrentPoint].position.y)
+                    mCurrentPoint += 1;
+
+                if (mCurrentPoint >= mMovePoints.Count)
+                    mCurrentPoint = 0;
+                break;
+            default:
+                break;
         }
     }
     private void OnDestroy()

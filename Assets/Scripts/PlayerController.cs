@@ -10,16 +10,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector3 mAddForwardDistance = Vector3.forward;
     [SerializeField] private float mSpeed = 1.5f;
 
-    [Header("Efects Components")]
-    [SerializeField] private GameObject mJellyPaintSprite = null;
-    [SerializeField] private int mMaxJellyPaintSpriteCount = 5;
+    [Header("Effects Components")]
     [SerializeField] private ParticleSystem mJellyParticle = null;
-
-    private List<GameObject> mJellyPaintSpriteList = new List<GameObject>();
+    [SerializeField] private JellyPool mJellyPool = null;
 
     private Vector3 mTargetPosition;
 
     private bool mIsOnPlatform;
+
+    private MoveDirection moveDirection = MoveDirection.Stay;
     private enum MoveDirection
     {
         MoveDown,
@@ -29,8 +28,6 @@ public class PlayerController : MonoBehaviour
         Stay
     }
 
-    private MoveDirection moveDirection = MoveDirection.Stay;
-    
     void Start()
     {
         SwipeHandler.OnSwipeDown += SwipeHandler_OnSwipeDown;
@@ -54,26 +51,7 @@ public class PlayerController : MonoBehaviour
                 moveDirection = MoveDirection.Stay;
                 if (mIsOnPlatform)
                 {
-                    if (mJellyPaintSpriteList.Count < mMaxJellyPaintSpriteCount)
-                    {
-                        var jellyPaint = Instantiate(mJellyPaintSprite, new Vector3(transform.position.x, mJellyPaintSprite.transform.position.y, transform.position.z), Quaternion.identity, transform.parent) as GameObject;
-                        mJellyPaintSpriteList.Add(jellyPaint);
-                    }
-                    else
-                    {
-                        var distance = 0f;
-                        var index = 0;
-                        for (int i = 0; i < mJellyPaintSpriteList.Count; i++)
-                        {
-                            if (distance < Vector3.Distance(transform.position, mJellyPaintSpriteList[i].transform.position))
-                            {
-                                distance = Vector3.Distance(transform.position, mJellyPaintSpriteList[i].transform.position);
-                                index = i;
-                            }
-                        }
-                        mJellyPaintSpriteList[index].transform.position = new Vector3(transform.position.x, mJellyPaintSprite.transform.position.y, transform.position.z);
-                        mJellyPaintSpriteList[index].transform.parent = transform.parent;
-                    }
+                    mJellyPool.GetPooledObject();
                     mJellyParticle.Play();
                 }
             });
@@ -90,26 +68,7 @@ public class PlayerController : MonoBehaviour
                 moveDirection = MoveDirection.Stay;
                 if (mIsOnPlatform)
                 {
-                    if (mJellyPaintSpriteList.Count < mMaxJellyPaintSpriteCount)
-                    {
-                        var jellyPaint = Instantiate(mJellyPaintSprite, new Vector3(transform.position.x, mJellyPaintSprite.transform.position.y, transform.position.z), Quaternion.identity, transform.parent) as GameObject;
-                        mJellyPaintSpriteList.Add(jellyPaint);
-                    }
-                    else
-                    {
-                        var distance = 0f;
-                        var index = 0;
-                        for (int i = 0; i < mJellyPaintSpriteList.Count; i++)
-                        {
-                            if (distance < Vector3.Distance(transform.position, mJellyPaintSpriteList[i].transform.position))
-                            {
-                                distance = Vector3.Distance(transform.position, mJellyPaintSpriteList[i].transform.position);
-                                index = i;
-                            }
-                        }
-                        mJellyPaintSpriteList[index].transform.position = new Vector3(transform.position.x, mJellyPaintSprite.transform.position.y, transform.position.z);
-                        mJellyPaintSpriteList[index].transform.parent = transform.parent;
-                    }
+                    mJellyPool.GetPooledObject();
                     mJellyParticle.Play();
                 }
             });
