@@ -15,9 +15,17 @@ public class GameManager : MonoBehaviour
             _instance = this;
     }
     
-    public void GameOver()
+    public void StartGame()
     {
-        print("GameOver");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        UIManager.Instance.MTutorialPanel.SetActive(false);
+    }
+    public void ShowEndCard()
+    {
+        UIManager.Instance.MSwipeHandlerPanel.SetActive(false);
+        UIManager.Instance.MEndCardPanel.SetActive(true);
+    }
+    public void GoToStore()
+    {
+        print("Go To Store");
     }
 }

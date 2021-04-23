@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SwipeHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
+public class SwipeHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IPointerClickHandler
 {
     public delegate void SwipeRightHandler();
     public delegate void SwipeLeftHandler();
@@ -37,5 +37,10 @@ public class SwipeHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        GameManager.Instance.StartGame();
     }
 }

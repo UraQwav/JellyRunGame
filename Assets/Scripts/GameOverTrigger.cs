@@ -6,6 +6,6 @@ public class GameOverTrigger : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        GameManager.Instance.GameOver();
+        GameManager.Instance.ShowEndCard();
     }
 }
