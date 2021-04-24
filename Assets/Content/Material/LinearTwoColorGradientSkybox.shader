@@ -5,6 +5,7 @@
 		_Up ("Up", Vector) = (0, 1, 0)
 		_Exp ("Exp", Range(0, 16)) = 1
 	}
+
 	SubShader {
 		Tags {
 			"RenderType" = "Background"

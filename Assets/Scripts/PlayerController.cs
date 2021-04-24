@@ -119,6 +119,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("MovePlatform"))
             transform.parent = other.transform.parent;
     }
+
     void OnTriggerExit(Collider other)
     {
         mIsOnPlatform = false;

@@ -2,7 +2,7 @@
 
 ### Tutorial
 ![image](https://user-images.githubusercontent.com/43065890/115953159-6a749c00-a4f2-11eb-84f2-1cfe6bba4cab.png)
-### Game 
+### Game Screenshot 
 ![image](https://user-images.githubusercontent.com/43065890/115953211-c9d2ac00-a4f2-11eb-9956-0b63b6758a73.png)
 ![image](https://user-images.githubusercontent.com/43065890/115953211-c9d2ac00-a4f2-11eb-9956-0b63b6758a73.png)
 ![image](https://user-images.githubusercontent.com/43065890/115953261-0a322a00-a4f3-11eb-985b-22a8eccbb131.png)
