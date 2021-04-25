@@ -13,6 +13,7 @@ public class FinishPlatform : MonoBehaviour
         mParticles.Play();
         StartCoroutine(ShowEndCard());
     }
+
     private IEnumerator ShowEndCard() {
         yield return new WaitForSeconds(mTimeToShow);
         GameManager.Instance.ShowEndCard();

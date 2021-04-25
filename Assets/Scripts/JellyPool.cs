@@ -8,6 +8,7 @@ public class JellyPool : MonoBehaviour
     [SerializeField] private int mMaxJellyPaintSpriteCount = 5;
 
     private List<GameObject> mJellyPaintSpriteList = new List<GameObject>();
+
     public void GetPooledObject()
     {
         if (mJellyPaintSpriteList.Count < mMaxJellyPaintSpriteCount)

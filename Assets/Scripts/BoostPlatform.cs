@@ -11,4 +11,5 @@ public class BoostPlatform : MonoBehaviour
         if(other.GetComponent<TrailRenderer>())
             other.GetComponent<TrailRenderer>().enabled = true;
     }
+
 }

@@ -19,11 +19,13 @@ public class GameManager : MonoBehaviour
     {
         UIManager.Instance.MTutorialPanel.SetActive(false);
     }
+
     public void ShowEndCard()
     {
         UIManager.Instance.MSwipeHandlerPanel.SetActive(false);
         UIManager.Instance.MEndCardPanel.SetActive(true);
     }
+
     public void GoToStore()
     {
         print("Go To Store");

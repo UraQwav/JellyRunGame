@@ -8,4 +8,5 @@ public class GameOverTrigger : MonoBehaviour
     {
         GameManager.Instance.ShowEndCard();
     }
+
 }

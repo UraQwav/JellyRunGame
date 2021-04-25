@@ -25,6 +25,7 @@ public class MovePlatform : MonoBehaviour
         UpDown,
         UpDownVelocity
     }
+
     void Start()
     {
         mRigidbody = GetComponent<Rigidbody>();
@@ -102,6 +103,7 @@ public class MovePlatform : MonoBehaviour
                 break;
         }
     }
+
     private void OnDestroy()
     {
         mSequence.Kill();
